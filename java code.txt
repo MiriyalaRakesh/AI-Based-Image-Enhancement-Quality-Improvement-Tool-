@@ -1,0 +1,87 @@
+java code
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        double food = 5000;
+        double transport = 2000;
+        double shopping = 3000;
+        double entertainment = 1500;
+
+        double total = food + transport + shopping + entertainment;
+
+        System.out.println("===== Expense Analysis Report =====");
+        System.out.println("Food: ₹" + food);
+        System.out.println("Transport: ₹" + transport);
+        System.out.println("Shopping: ₹" + shopping);
+        System.out.println("Entertainment: ₹" + entertainment);
+
+        System.out.println("\nTotal Expense: ₹" + total);
+
+        if(total > 10000){
+            System.out.println("Recommendation: Reduce unnecessary spending.");
+        } else {
+            System.out.println("Recommendation: Good financial management.");
+        }
+    }
+}
+
+
+
+SQl code
+
+CREATE DATABASE expense_db;
+
+USE expense_db;
+
+CREATE TABLE expenses(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    category VARCHAR(50),
+    amount DOUBLE
+);
+
+INSERT INTO expenses(category, amount)
+VALUES
+('Food',5000),
+('Transport',2000),
+('Shopping',3000),
+('Entertainment',1500);
+
+
+jdbc collection
+
+import java.sql.*;
+
+public class DBConnection {
+
+    public static void main(String[] args) {
+
+        try {
+
+            Connection con = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/expense_db",
+                    "root",
+                    "password");
+
+            Statement st = con.createStatement();
+
+            ResultSet rs = st.executeQuery("SELECT * FROM expenses");
+
+            while(rs.next()) {
+                System.out.println(
+                        rs.getInt("id") + " "
+                        + rs.getString("category") + " "
+                        + rs.getDouble("amount"));
+            }
+
+            con.close();
+
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+}
